@@ -1,0 +1,137 @@
+{% extends "admin/admin.html" %} {% block content %}
+<section class="content-header">
+    <h1>CAS考评管理系统</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">
+                <i class="fa fa-dashboard"></i>分数管理</a>
+        </li>
+        <li class="active">分数列表</li>
+    </ol>
+</section>
+<section class="content" id="showcontent">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">分数列表</h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入关键字...">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th>姓名</th>
+                                <th>分数
+                                    <div class="btn-group">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                筛选
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#">总分升序</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">总分降序</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">当月得分升序</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">当月得分降序</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">当前季度得分升序</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">当前季度得分降序</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </th>
+                                <th>额度
+                                    <div class="btn-group">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                筛选
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#">总额度升序</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">总额度降序</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </th>
+                                <th>操作事项</th>
+                            </tr>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.score }}</td>
+                                <td>{{ user.fund }}</td>
+                                <td>
+                                    <a class="label label-success" href="{{ url_for('admin.score_edit', user_id=user.id) }}">分数</a>
+                                    &nbsp;
+                                    <a class="label label-warning" href="{{ url_for('admin.fund_edit', user_id=user.id) }}">额度</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li>
+                                <a href="#">首页</a>
+                            </li>
+                            <li>
+                                <a href="#">上一页</a>
+                            </li>
+                            <li>
+                                <a href="#">1</a>
+                            </li>
+                            <li>
+                                <a href="#">2</a>
+                            </li>
+                            <li>
+                                <a href="#">3</a>
+                            </li>
+                            <li>
+                                <a href="#">下一页</a>
+                            </li>
+                            <li>
+                                <a href="#">尾页</a>
+                            </li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+</section>
+{% endblock %} {% block js %}
+<script>
+    function del() {
+        var msg = "确定删除吗？";
+        if (confirm(msg) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script> {% endblock %}
