@@ -1,4 +1,6 @@
-#coding:utf8
+#coding=utf8
+
+
 import pymysql
 from models import Models
 
@@ -16,7 +18,7 @@ DB = {
 
 def getConn():
     """
-    连接数据库
+    获取数据库连接
     """
     conn = pymysql.connect(host=DB['host'], port=DB['port'], user=DB['user'],
                             passwd=DB['passwd'], db=DB['db'], charset=DB['charset'])

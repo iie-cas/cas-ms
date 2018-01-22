@@ -1,13 +1,10 @@
-# coding: utf8
+#coding=utf-8
+
+
 from . import home
 from flask import render_template, redirect, url_for, session, request, redirect, flash
 from functools import wraps
 from app import getConn
-
-
-@home.route('/')
-def index():
-    return render_template('home/index.html')
 
 
 def home_login_req(f):
@@ -22,12 +19,17 @@ def home_login_req(f):
     return decorated_function
 
 
+@home.route('/')
+def index():
+    # 渲染并返回 home/index.html 页面
+    return render_template('home/index.html')
+
+
 @home.route('/login/', methods=['GET', 'POST'])
 def login():
     """
     用户登录
     """
-    user_columns = ('id', 'account', 'password', 'username')
     if request.method == 'POST':
         account = request.form['account']
         password = request.form['password']
@@ -35,15 +37,19 @@ def login():
             cursor.execute(
                 '''
                 select * from user where account="%s"
-                ''' %account)
+                ''' %account
+            )
         value = cursor.fetchone()
         if not value:
+            # 判断用户名是否存在
             flash(u'用户名不存在')
         else:
-            user_dict = dict(zip(user_columns, value))
-            if user_dict['password'] == password:
-                for key in user_dict:
-                    session[key] = user_dict[key]
+            columns = ('id', 'account', 'password', 'username')
+            user = dict(zip(columns, value))
+            if user['password'] == password:
+                # 判断密码是否正确
+                for key in user:
+                    session[key] = user[key]
                 return redirect(url_for('home.user'))
             else:
                 flash(u'密码错误')
@@ -53,44 +59,58 @@ def login():
 @home.route('/logout/')
 @home_login_req
 def logout():
-    # 重定向到 home 模块下的 login 视图
-    user_columns = ('id', 'account', 'password', 'username')
-    for column in user_columns:
+    """
+    用户退出
+    """
+    columns = ('id', 'account', 'password', 'username')
+    for column in columns:
         session.pop(column, None)
+    # 重定向到登录页面
     return redirect(url_for('home.login'))
+
 
 @home.route('/user/', methods=['GET', 'POST'])
 @home_login_req
 def user():
     if request.method == 'POST':
+        # 如果用户修改了个人信息，会发送 POST 请求 
         pass
+    # 如果是 GET 请求，则会直接执行以下代码
     account = session['account']
-    columns = ('id', 'account', 'password', 'username', 'education', 'grade', 'score', 'fund', 'telephone', 'qq', 'adm_time')
     with getConn() as cursor:
         cursor.execute(
             '''
-            select id, account, password, username, education, grade, score, fund, telephone, qq, adm_time from user where account="%s"
-            ''' %account)
+            select id, account, password, username, education, grade, score, fund, telephone, qq from user where account="%s"
+            ''' %account
+        )
         user = cursor.fetchone()
-    user = dict(zip(columns, user))
-    for key in user:
-        if not user[key]:
-            user[key] = u'待录入'
+        columns = ('id', 'account', 'password', 'username', 'education', 'grade', 'score', 'fund', 'telephone', 'qq')
+        user = dict(zip(columns, user))
     return render_template('home/user.html', user=user)  
+
 
 @home.route('/pwd/')
 @home_login_req
 def pwd():
-   return render_template('home/pwd.html')
+    """
+    修改密码
+    """
+    return render_template('home/pwd.html')
 
-# 得分记录页面
+
 @home.route('/score/')
 @home_login_req
 def score():
-   return render_template('home/score.html')
+    """
+    得分记录页面
+    """
+    return render_template('home/score.html')
 
-# 额度记录页面
+
 @home.route('/fund/')
 @home_login_req
 def fund():
-   return render_template('home/fund.html')
+    """
+    额度记录页面
+    """
+    return render_template('home/fund.html')

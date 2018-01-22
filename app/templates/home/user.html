@@ -1,130 +1,134 @@
-{% extends "home/home.html" %} {% block css %}
-<style>
-    .navbar-brand>img {
-        display: inline;
-    }
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{ url_for('static', filename='static/images/favicon.ico') }}">
+    
 
-    .col-lg-1,
-    .col-lg-10,
-    .col-lg-11,
-    .col-lg-12,
-    .col-lg-2,
-    .col-lg-3,
-    .col-lg-4,
-    .col-lg-5,
-    .col-lg-6,
-    .col-lg-7,
-    .col-lg-8,
-    .col-lg-9,
-    .col-md-1,
-    .col-md-10,
-    .col-md-11,
-    .col-md-12,
-    .col-md-2,
-    .col-md-3,
-    .col-md-4,
-    .col-md-5,
-    .col-md-6,
-    .col-md-7,
-    .col-md-8,
-    .col-md-9,
-    .col-sm-1,
-    .col-sm-10,
-    .col-sm-11,
-    .col-sm-12,
-    .col-sm-2,
-    .col-sm-3,
-    .col-sm-4,
-    .col-sm-5,
-    .col-sm-6,
-    .col-sm-7,
-    .col-sm-8,
-    .col-sm-9,
-    .col-xs-1,
-    .col-xs-10,
-    .col-xs-11,
-    .col-xs-12,
-    .col-xs-2,
-    .col-xs-3,
-    .col-xs-4,
-    .col-xs-5,
-    .col-xs-6,
-    .col-xs-7,
-    .col-xs-8,
-    .col-xs-9 {
-        padding-right: 3px;
-        padding-left: 3px;
-    }
+    <title>用户中心</title>
 
-    .media {
-        padding: 3px;
-        border: 1px solid #ccc
-    }
-</style>
-{% endblock %} {% block content %} {% include "home/menu.html" %}
-<div class="col-md-9">
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <span class="glyphicon glyphicon-map-marker"></span>&nbsp;用户中心</h3>
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+     
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{{ url_for('static', filename='home/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='home/css/dashboard.css') }}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CAS</a>
         </div>
-        <div class="panel-body">
-            <form role="form">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="input_score">
-                            <span class="fa fa-calculator"></span>&nbsp;分数</label>
-                        <input id="input_score" class="form-control" name="score" type="text" readonly unselectable="on" value="{{user.score}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="input_fund">
-                            <span class="fa fa-money"></span>&nbsp;额度</label>
-                        <input id="input_fund" class="form-control" name="fund" type="text" readonly unselectable="on" value="{{user.fund}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="input_name">
-                            <span class="glyphicon glyphicon-user"></span>&nbsp;姓名</label>
-                        <input id="input_name" class="form-control" name="name" type="text" readonly unselectable="on" value="{{user.username}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="input_phone">
-                            <span class="glyphicon glyphicon-phone"></span>&nbsp;手机</label>
-                        <input id="input_phone" class="form-control" name="phone" type="text" autofocus value="{{user.telephone}}">
-                    </div>
-                    <div class="col-md-12" id="error_phone"></div>
-                    <div class="form-group">
-                        <label for="input_qq">
-                            <span class="fa fa-qq"></span>&nbsp;QQ</label>
-                        <input id="input_qq" class="form-control" name="qq" type="text" autofocus value="{{user.qq}}">
-                    </div>
-                    <div class="col-md-12" id="error_qq"></div>
-                    <div class="form-group">
-                        <label for="input_education">
-                            <span class="glyphicon glyphicon-education"></span>&nbsp;学历</label>
-                        <input id="input_education" class="form-control" name="education" type="text" autofocus value="{{user.education}}">
-                    </div>
-                    <div class="col-md-12" id="error_education"></div>
-                    <div class="form-group">
-                        <label for="input_grade">
-                            <span class="fa fa-address-card"></span>&nbsp;年级</label>
-                        <input id="input_grade" class="form-control" name="grade" type="text" autofocus value="{{user.grade}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="input_admtime">
-                            <span class="glyphicon glyphicon-calendar"></span>&nbsp;入学时间</label>
-                        <input id="input_admtime" class="form-control" placeholder="入学时间" name="admtime" type="text" autofocus value="{{user.adm_time}}">
-                    </div>
-                    <div class="col-md-12" id="error_admtime"></div>
-                    <a href="{{url_for('home.user')}}" class="btn btn-success">
-                        <span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</a>
-                </fieldset>
-            </form>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">退出</a></li>
+          </ul>
         </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <!-- <h1 class="page-header">Dashboard</h1> -->
+          <div class="row placeholders">
+               <div class="col-md-9">
+                  <div class="panel panel-warning">
+                      <div class="panel-heading">
+                          <h3 class="panel-title">
+                              <span class="glyphicon glyphicon-map-marker"></span>&nbsp;用户中心</h3>
+                      </div>
+                      <div class="panel-body">
+                          <form role="form">
+                              <fieldset>
+                                  <div class="form-group">
+                                      <label for="input_score">
+                                          <span class="fa fa-calculator"></span>&nbsp;分数</label>
+                                      <input id="input_score" class="form-control" name="score" type="text" readonly unselectable="on" value="{{user.score}}">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="input_fund">
+                                          <span class="fa fa-money"></span>&nbsp;额度</label>
+                                      <input id="input_fund" class="form-control" name="fund" type="text" readonly unselectable="on" value="{{user.fund}}">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="input_name">
+                                          <span class="glyphicon glyphicon-user"></span>&nbsp;姓名</label>
+                                      <input id="input_name" class="form-control" name="name" type="text" readonly unselectable="on" value="{{user.username}}">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="input_phone">
+                                          <span class="glyphicon glyphicon-phone"></span>&nbsp;手机</label>
+                                      <input id="input_phone" class="form-control" name="phone" type="text" autofocus value="{{user.telephone}}">
+                                  </div>
+                                  <div class="col-md-12" id="error_phone"></div>
+                                  <div class="form-group">
+                                      <label for="input_qq">
+                                          <span class="fa fa-qq"></span>&nbsp;QQ</label>
+                                      <input id="input_qq" class="form-control" name="qq" type="text" autofocus value="{{user.qq}}">
+                                  </div>
+                                  <div class="col-md-12" id="error_qq"></div>
+                                  <div class="form-group">
+                                      <label for="input_education">
+                                          <span class="glyphicon glyphicon-education"></span>&nbsp;学历</label>
+                                      <input id="input_education" class="form-control" name="education" type="text" autofocus value="{{user.education}}">
+                                  </div>
+                                  <div class="col-md-12" id="error_education"></div>
+                                  <div class="form-group">
+                                      <label for="input_grade">
+                                          <span class="fa fa-address-card"></span>&nbsp;年级</label>
+                                      <input id="input_grade" class="form-control" name="grade" type="text" autofocus value="{{user.grade}}">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="input_admtime">
+                                          <span class="glyphicon glyphicon-calendar"></span>&nbsp;入学时间</label>
+                                      <input id="input_admtime" class="form-control" placeholder="入学时间" name="admtime" type="text" autofocus value="{{user.adm_time}}">
+                                  </div>
+                                  <div class="col-md-12" id="error_admtime"></div>
+                                  <a href="{{url_for('home.user')}}" class="btn btn-success">
+                                      <span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</a>
+                              </fieldset>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+               <!-- 
+
+                -->
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-{% endblock %} {% block js %}
-<script>
-    $(document).ready(function () {
-        $("#m-1").addClass("active")
-    });
-</script> {% endblock %}
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="{{ url_for('static', filename='home/js/holder.min.js') }}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ url_for('static', filename='home/js/ie10-viewport-bug-workaround.js') }}"></script>
+  </body>
+</html>

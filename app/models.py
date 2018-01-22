@@ -23,7 +23,6 @@ Models = {
         fund INT DEFAULT 0,
         telephone VARCHAR(100),
         qq VARCHAR(100),
-        adm_time VARCHAR(100),
         create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(id)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8;

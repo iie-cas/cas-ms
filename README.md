@@ -1,47 +1,36 @@
-## 依赖包
-
-### requirements.txt
+## 解决项目依赖问题
+### 通过 requirements.txt 文件安装依赖包 
 ```
-PyMySQL==0.7.11
-Flask==0.12.2
-Flask_Script==2.0.6
-```
-
-### 安装依赖包 
-``` shell
 pip install -r requirements.txt
 ```
 
-## 数据库
+### 生成 requirements.txt 文件的方法
+#### 方法一，该项目使用的是该方法
+```
+pip install pipreqs
+pipreqs ./
+```
+#### 方法二
+```
+pip freeze > ./requirements.txt
+```
 
-### 创建数据库
-``` sql
+## 项目部署
+```
+# 创建数据库
+mysql -uroot -p123456
 CREATE DATABASE score;
+
+# 切换到 score 根目录下，执行以下命令
+python manage.py deploy
 ```
 
-### 数据库初始化
+## 项目启动
 ```
-source init.sql
-```
-
-### 数据库迁移
-``` sql
-mysql dump -uroot -p123456 > score.sql
-source score.sql
+# 切换到 score 根目录下，执行以下命令
+python manage.py run
 ```
 
+## 数据库
 ### ER 图
 ![ER图](er.jpg)
-
-## 待完善
-- 分页功能
-- 搜索功能
-- 统计功能：排序，分时间段数据统计
-- 添加普通管理员
-- 普通管理员权限管理
-- 主页前端处理
-- 前台后端逻辑处理、前台前端页面完善
-
-## 服务器
-
-### 安装 NGINX 服务器
