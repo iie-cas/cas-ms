@@ -67,6 +67,7 @@ def logout():
     for key in keys:
         # Flask 中的 session 基于字典类型实现，调用 session.pop() 方法时会返回调用时传入的键对应的值，如果键并不存在，那么返回第二个参数 
         session.pop(key, None)
+    # print(session)
     # 重定向到登录页面
     return redirect(url_for('admin.login'))
 
