@@ -6,12 +6,8 @@
 
 {% block content %}
 <div class="container">
-    
       <form class="form-signin" action="{{ url_for('home.login') }}" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        {% for msg in get_flashed_messages() %}
-        <p class="login-box-msg" style="color:red">{{msg}}</p>
-        {% endfor %}
         <label for="inputAccount" class="sr-only">用户名</label>
         <input type="account" id="inputAccount" class="form-control" placeholder="用户名" name="account" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
@@ -23,8 +19,7 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
-
-    </div> <!-- /container -->
+  </div>
 {% endblock %}
 
 {% block js %}
