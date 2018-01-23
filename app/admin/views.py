@@ -14,7 +14,7 @@ def admin_login_req(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'account' not in session:
+        if 'is_super' not in session:
             return redirect(url_for('admin.login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function

@@ -1,49 +1,51 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CAS考评管理系统</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='base/images/xgs.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='ionicons/css/ionicons.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/AdminLTE.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin/plugins/iCheck/square/blue.css') }}">
+
+    <!-- 包含头部信息用于适应不同设备 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- 包含 bootstrap 样式表 -->
+    <link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- <link rel="icon" href="{{ url_for('static', filename='home/images/favicon.ico') }}"> -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- 自定义样式表 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/floating-labels.css') }}">
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href=""><b>CAS考评管理系统</b></a>
+
+<body>
+    <form class="form-signin"  action="{{ url_for('admin.login') }}" method="post">
+        <div class="text-center mb-4">
+            <img class="mb-4" src="{{ url_for('static', filename='admin/images/login.png') }}" alt="" width="180" height="180">
+            <br>
+            <br>
         </div>
-        <div class="login-box-body">
-            {% for msg in get_flashed_messages() %}
-            <p class="login-box-msg" style="color:red">{{msg}}</p>
-            {% endfor %}
-            <form action="{{ url_for('admin.login') }}" method="post" id="form-data">
-                <div class="form-group has-feedback">
-                    <input name="account" type="text" class="form-control" placeholder="请输入账号">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    <div class="col-md-12" id="input_user"></div>
-                </div>
-                <div class="form-group has-feedback">
-                    <input name="password" type="password" class="form-control" placeholder="请输入密码">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    <div class="col-md-12" id="input_pwd"></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                    </div>
-                    <div class="col-xs-4">
-                        <button id="btn-sub" type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
-                    </div>
-                </div>
-            </form>
+        {% for msg in get_flashed_messages() %}
+        <p class="login-box-msg" style="color:red">{{msg}}</p>
+        {% endfor %}
+        <div class="form-group">
+            <input name="account" type="text" class="form-control" placeholder="请输入账号">
         </div>
-    </div>
-    <script src="{{ url_for('static',filename='admin/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='admin/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='admin/plugins/iCheck/icheck.min.js') }}"></script>
+        <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="请输入密码">
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+    </form>
 </body>
+
 </html>

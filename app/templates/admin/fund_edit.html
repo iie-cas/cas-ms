@@ -1,61 +1,42 @@
-{% extends "admin/admin.html" %}
+{% extends "admin/base.html" %}
 
 {% block content %}
-<section class="content-header">
-    <h1>CAS考评管理系统</h1>
-    <ol class="breadcrumb">
-        <li>
-            <a href="#"><i class="fa fa-dashboard"></i>考评管理</a>
-        </li>
-        <li class="active">修改额度</li>
-    </ol>
-</section>
-<section class="content" id="showcontent">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">修改额度</h3>
-                </div>
-                <form role="form" action="{{ url_for('admin.fund_edit', user_id=user.id) }}" method="post">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="input_account">账号</label>
-                            <input type="text" class="form-control" id="input_account" name="account" readonly unselectable="on" value="{{ user.account }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_username">姓名</label>
-                            <input type="text" class="form-control" id="input_username" name="username" readonly unselectable="on" value="{{ user.username }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_fund">目前额度</label>
-                            <input type="text" class="form-control" id="input_fund" name="current_fund" readonly unselectable="on" value="{{ user.fund }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_tag_fund">奖励/扣除额度</label>
-                            <select class="form-control" id="input_tag_fund" name="option">
-                                <option value="1">奖励额度</option>
-                                <option value="2">扣除额度</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_editfund">额度￥</label>
-                            {% for msg in get_flashed_messages() %}
-                            <p style="color:red">{{ msg }}</p>
-                            {% endfor %}
-                            <input type="text" class="form-control" id="input_editfund" name="edit_fund" placeholder="请输入整数">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_edit_fund_reason"><span class="glyphicon glyphicon-edit"></span>&nbsp;详细说明</label>
-                            <textarea class="form-control" rows="5" id="input_edit_fund_reason" name="reason" placeholder="无详细说明"></textarea>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">确认修改</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+<h3 class="box-title">修改额度</h3>
+<form role="form" action="{{ url_for('admin.fund_edit', user_id=user.id) }}" method="post">
+    <div class="form-group">
+        <label for="input_account">账号</label>
+        <input type="text" class="form-control" id="input_account" name="account" readonly unselectable="on" value="{{ user.account }}">
     </div>
-</section>
+    <div class="form-group">
+        <label for="input_username">姓名</label>
+        <input type="text" class="form-control" id="input_username" name="username" readonly unselectable="on" value="{{ user.username }}">
+    </div>
+    <div class="form-group">
+        <label for="input_fund">目前额度</label>
+        <input type="text" class="form-control" id="input_fund" name="current_fund" readonly unselectable="on" value="{{ user.fund }}">
+    </div>
+    <div class="form-group">
+        <label for="input_tag_fund">奖励/扣除额度</label>
+        <select class="form-control" id="input_tag_fund" name="option">
+            <option value="1">奖励额度</option>
+            <option value="2">扣除额度</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="input_editfund">额度￥</label>
+        {% for msg in get_flashed_messages() %}
+        <p style="color:red">{{ msg }}</p>
+        {% endfor %}
+        <input type="text" class="form-control" id="input_editfund" name="edit_fund" placeholder="请输入整数">
+    </div>
+    <div class="form-group">
+        <label for="input_edit_fund_reason"><span class="glyphicon glyphicon-edit"></span>&nbsp;详细说明</label>
+        <textarea class="form-control" rows="5" id="input_edit_fund_reason" name="reason" placeholder="无详细说明"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">确认修改</button>
+</form>
 {% endblock %}
+
+{% block js %}
+{% endblock%}

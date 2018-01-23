@@ -1,62 +1,42 @@
-{% extends "admin/admin.html" %}
+{% extends "admin/base.html" %}
 
 {% block content %}
-<section class="content-header">
-    <h1>CAS考评管理系统</h1>
-    <ol class="breadcrumb">
-        <li>
-            <a href="#"><i class="fa fa-dashboard"></i>考评管理</a>
-        </li>
-        <li class="active">添加成员</li>
-    </ol>
-</section>
-<section class="content" id="showcontent">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">添加成员</h3>
-                </div>
-                {% for msg in get_flashed_messages() %}
-                <p class="box-body" style="color:red">{{ msg }}</p>
-                {% endfor %}
-                <form role="form", action="{{ url_for('admin.user_add') }}", method="post">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="input_account">账号</label>
-                            <input type="text" class="form-control" id="input_account" name="account" placeholder="请输入账号名称（推荐姓名拼音）">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_name">姓名</label>
-                            <input type="text" class="form-control" id="input_name" name="username" placeholder="成员姓名">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_pwd">初始密码</label>
-                            <input type="text" class="form-control" id="input_pwd" name="password" placeholder="123456" value="123456">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_score">初始得分</label>
-                            <input type="text" class="form-control" id="input_score" name="score" placeholder="0" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_fund">初始经费</label>
-                            <input type="text" class="form-control" id="input_fund" name="fund" placeholder="0" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_edu">学历</label>
-                            <select class="form-control" id="input_tag_id" name="education">
-                                <option value="1">学硕</option>
-                                <option value="2">专硕</option>
-                                <option value="3">博士</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">添加</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+<h3>添加成员</h3>
+{% for msg in get_flashed_messages() %}
+<p class="box-body" style="color:red">{{ msg }}</p>
+{% endfor %}
+<form role="form", action="{{ url_for('admin.user_add') }}", method="post">
+    <div class="form-group">
+        <label for="input_account">账号</label>
+        <input type="text" class="form-control" id="input_account" name="account" placeholder="请输入账号名称（推荐姓名拼音）">
     </div>
-</section>
+    <div class="form-group">
+        <label for="input_name">姓名</label>
+        <input type="text" class="form-control" id="input_name" name="username" placeholder="成员姓名">
+    </div>
+    <div class="form-group">
+        <label for="input_pwd">初始密码</label>
+        <input type="text" class="form-control" id="input_pwd" name="password" placeholder="123456" value="123456">
+    </div>
+    <div class="form-group">
+        <label for="input_score">初始得分</label>
+        <input type="text" class="form-control" id="input_score" name="score" placeholder="0" value="0">
+    </div>
+    <div class="form-group">
+        <label for="input_fund">初始经费</label>
+        <input type="text" class="form-control" id="input_fund" name="fund" placeholder="0" value="0">
+    </div>
+    <div class="form-group">
+        <label for="input_edu">学历</label>
+        <select class="form-control" id="input_tag_id" name="education">
+            <option value="1">学硕</option>
+            <option value="2">专硕</option>
+            <option value="3">博士</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">添加</button>
+</form>
+{% endblock %}
+
+{% block js %}
 {% endblock %}
