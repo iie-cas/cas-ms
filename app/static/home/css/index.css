@@ -2,11 +2,6 @@
   width: 60%;
 }
 
-.mastfoot {
-  position: fixed;
-  bottom: 0;
-}
-
 .col-center-block {
   display: block;
   float: none;
@@ -14,6 +9,7 @@
   margin-right:auto;
 }
 
-.inner {
-  padding: 30px;
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
