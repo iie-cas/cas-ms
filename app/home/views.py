@@ -109,13 +109,45 @@ def user():
         return render_template('home/user.html', user=user)  
 
 
-@home.route('/pwd/')
+@home.route('/pwd/', methods=['GET', 'POST'])
 @home_login_req
 def pwd():
     """
     修改密码
     """
-    return render_template('home/pwd.html')
+    if request.method == 'POST':
+        oldPassword = request.form.get("oldPassword")
+        newPassword = request.form.get("newPassword")
+        status = True
+        db = getConn()
+        cursor = db.cursor()
+        sql = '''select password from user where id=%s'''%(session['id'])
+        try:
+            password = None
+            cursor.execute(sql)
+            password = cursor.fetchone()[0]
+        except:
+            message = u'服务器内部错误，请重新更改'
+        else:
+            print(password)
+            print(oldPassword)
+            if password != oldPassword:
+                status = False
+                message = u'旧密码错误'
+            else:
+                sql = '''update user set password="%s" where id="%s"'''%(newPassword, session['id'])
+                try:
+                    1 / 0
+                    cursor.execute(sql)
+                    db.commit()
+                except:
+                    db.rollback()
+                    status = False
+                    message = u'更改密码失败，请重新更改'
+        db.close()
+        return jsonify({'status': status, 'message': message})
+    else:
+        return render_template('home/pwd.html')
 
 
 @home.route('/score/')

@@ -27,27 +27,27 @@
                     <input type="hidden" id="userId" value="{{ user.id }}">
                     <div class="form-group">
                         <label for="input_score"><span class=""></span>分数</label>
-                        <input id="input_score" class="form-control" name="score" type="text" readonly unselectable="on" value="{{user.score}}">
+                        <input id="input_score" class="form-control" type="text" readonly unselectable="on" value="{{user.score}}">
                     </div>
                     <div class="form-group">
                         <label for="input_fund"><span class=""></span>额度</label>
-                        <input id="input_fund" class="form-control" name="fund" type="text" readonly unselectable="on" value="{{user.fund}}">
+                        <input id="input_fund" class="form-control"  type="text" readonly unselectable="on" value="{{user.fund}}">
                     </div>
                     <div class="form-group">
                         <label for="input_name"><span class=""></span>姓名</label>
-                        <input id="input_name" class="form-control" name="name" type="text" readonly unselectable="on" value="{{user.username}}">
+                        <input id="input_name" class="form-control"  type="text" readonly unselectable="on" value="{{user.username}}">
                     </div>
                     <div class="form-group">
                         <label for="input_education"><span class=""></span>学历</label>
-                        <input id="input_education" class="form-control" name="education" type="text" readonly unselectable="on" value="{{user.education}}">
+                        <input id="input_education" class="form-control" type="text" readonly unselectable="on" value="{{user.education}}">
                     </div>
                     <div class="form-group">
                         <label for="input_grade"><span class=""></span>年级</label>
-                        <input id="input_grade" class="form-control" name="grade" type="text" readonly unselectable="on" value="{{user.grade}}">
+                        <input id="input_grade" class="form-control" type="text" readonly unselectable="on" value="{{user.grade}}">
                     </div>
                     <div class="form-group">
                         <label for="input_phone"><span class=""></span>手机</label>
-                        <input id="input_phone" class="form-control" name="phone" type="text" value="{{ user.telephone }}">
+                        <input id="input_phone" class="form-control" type="text" value="{{ user.telephone }}">
                     </div>
                     <div id="telAlert" class="alert alert-danger">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -65,8 +65,8 @@
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
                         <strong></strong><span></span>
                     </div>
-                    <button type="submit" id="save_change" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</button>
-                    <button id="edit_pwd" href="{{ url_for('home.pwd') }}" class="btn btn-danger"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改密码</button>
+                    <a id="save_change" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</a>
+                    <a id="edit_pwd" href="{{ url_for('home.pwd') }}"" class="btn btn-danger"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改密码</a>
                 </fieldset>
             </form>
         </div>

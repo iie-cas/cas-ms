@@ -1,9 +1,17 @@
 {% extends "home/base.html" %}
 
+{% block css %}
+<style>
+    #myAlert {
+        display: none;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     {% include "home/nav.html" %}
-    <div class="row clearfix">
+    <div class="row">
         <div class="col-md-12 column">
             <div class="page-header">
                 <h3>
@@ -12,26 +20,27 @@
             </div>
         </div>
     </div>
-    <div class="row clearfix">
-        <div class="col-md-12 column">
+    <div class="row">
+        <div class="col-md-12">
             <form role="form">
                 <fieldset>
+                    <div id="myAlert" class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>失败！</strong><span></span>
+                    </div>
                     <div class="form-group">
                         <label for="input_oldpwd"><span class="glyphicon glyphicon-lock"></span>&nbsp;旧密码</label>
-                        <input id="input_oldpwd" class="form-control" placeholder="旧密码" name="oldpwd" type="password" autofocus>
+                        <input id="input_oldpwd" class="form-control" placeholder="旧密码" type="password" autofocus>
                     </div>
-                    <div class="col-md-12" id="error_oldpwd"></div>
                     <div class="form-group">
                         <label for="input_newpwd"><span class="glyphicon glyphicon-lock"></span>&nbsp;新密码</label>
-                        <input id="input_newpwd" class="form-control" placeholder="新密码" name="newpwd" type="password" autofocus>
+                        <input id="input_newpwd" class="form-control" placeholder="新密码" type="password">
                     </div>
-                    <div class="col-md-12" id="error_newpwd"></div>
                     <div class="form-group">
-                        <label for="input_verifypwd"><span class="glyphicon glyphicon-lock"></span>&nbsp;确认密码</label>
-                        <input id="input_verifypwd" class="form-control" placeholder="确认密码" name="verifypwd" type="password" autofocus>
+                        <label for="input_validpwd"><span class="glyphicon glyphicon-lock"></span>&nbsp;确认密码</label>
+                        <input id="input_validpwd" class="form-control" placeholder="确认密码" type="password">
                     </div>
-                    <div class="col-md-12" id="error_verifypwd"></div>
-                    <a href="{{ url_for('home.login') }}" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>&nbsp;保存修改</a>
+                    <button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>&nbsp;保存修改</button>
                 </fieldset>
             </form>
         </div>
@@ -42,7 +51,108 @@
 {% block js %}
 <script>
     $(function(){
-        $("nav li:nth-child(1)").addClass("active");
+        $("nav ul:nth-child(1) li:nth-child(1)").addClass("active");
     });
+
+    // 验证旧密码字段
+    function validOldPassword() {
+        var password = $("#input_oldpwd").val();
+        var message = "";
+        var myreg = /^[a-zA-Z0-9]{6,20}$/;
+        if(!myreg.test(password)) {
+            message = "输入的旧密码不合法，密码只包含字母和数字，长度在 6-20 之间";
+        }
+        return {"password": password, "message": message};
+    }
+
+    // 验证新密码字段
+    function validNewPassword1() {
+        var password = $("#input_newpwd").val();
+        var message = "";
+        var myreg = /^[a-zA-Z0-9]{6,20}$/;
+        if(!myreg.test(password)) {
+            message = "输入的新密码不合法，密码只包含字母和数字，长度在 6-20 之间";
+        }
+        return {"password": password, "message": message};
+    }
+
+    // 验证新密码验证字段
+    function validNewPassword2() {
+        var password1 = $("#input_newpwd").val();
+        var password2 = $("#input_validpwd").val();
+        console.log(password1);
+        console.log(password2);
+        var message = "";
+        if(password1 !== password2){
+            message = "两次输入的新密码不一致";
+        }
+        return message;
+    }
+    
+  $("button").click(function() {
+    
+    var info = validOldPassword();
+    var oldPassword = info["password"];
+    var message = info["message"];
+    if(message !== ""){
+      $("#myAlert")
+        .find("span")
+        .text(message)
+        .end()
+        .show()
+      $("#input_oldpwd").focus();
+      return false;
+    }
+
+    info = validNewPassword1();
+    var newPassword = info["password"];
+    message = info["message"];
+    if(message !== ""){
+      $("#myAlert")
+        .find("span")
+        .text(message)
+        .end()
+        .show()
+      $("#input_newpwd").focus();
+      return false;
+    }
+
+    message = validNewPassword2();
+    console.log(message);
+    if(message !== ""){
+      $("#myAlert")
+        .find("span")
+        .text(message)
+        .end()
+        .show()
+      $("#input_validpwd").focus();
+      return false;
+    }
+
+    $.ajax({
+      type: "POST",
+      async: true,
+      url: "{{ url_for('home.pwd') }}",
+      dataType: "json",
+      data: {
+        "oldPassword": oldPassword,
+        "newPassword": newPassword
+      },
+      success: function(data, textStatus) {
+        if(data.status === false){
+          $("#myAlert")
+          .find("span")
+          .text(data.message)
+          .end()
+          .show()
+        } else {
+          window.location.href ="{{ url_for('home.user') }}";
+        }
+      }
+    });
+    return false;
+  });
+
+
 </script>
 {% endblock %}
