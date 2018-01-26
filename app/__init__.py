@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'd7361dff5b8e4df5b06d37cc296d4a6e'
 
 # 开启调试模式
-app.debug = True
+# app.debug = True
 
 # 导入蓝图
 from app.home import home as home_blueprint

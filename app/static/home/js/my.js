@@ -1,5 +1,5 @@
 function validInitScore(str) {
-    // 0 或者非 0 开头的数（1~4）位
+    // 0 或者非 0 开头的数（1~9）位
     var myreg = /^(0|[1-9]\d{0,8})$/;
     if(!myreg.test(str)) {
         return false;
@@ -9,7 +9,7 @@ function validInitScore(str) {
 
 
 function validInitFund(str) {
-    // 0 或者非 0 开头的数（1~4）位
+    // 0 或者非 0 开头的数（1~9）位
     var myreg = /^(0|[1-9]\d{0,8})$/;
     if(!myreg.test(str)) {
         return false;

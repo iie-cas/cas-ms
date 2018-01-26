@@ -37,7 +37,8 @@
             <option value="2">报告</option>
             <option value="3">发票</option>
             <option value="4">活动</option>
-            <option value="5">其它</option>
+            <option value='5'>周报</option>
+            <option value="6">其它</option>
         </select>
     </div>
     <div class="form-group">
@@ -60,12 +61,14 @@
             .append("<option value='2'>报告</option>")
             .append("<option value='3'>发票</option>")
             .append("<option value='4'>活动</option>")
-            .append("<option value='5'>其它</option>");
+            .append("<option value='5'>周报</option>")
+            .append("<option value='6'>其它</option>");
         } else {
             $("#tag")
             .empty()
             .append("<option value='0'>购买书籍</option>")
             .append("<option value='1'>购买电子产品</option>")
+            .append("<option value='2'>请假</option>")
             .append("<option value='3'>其它</option>");
         }
     });
