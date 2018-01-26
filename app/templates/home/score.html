@@ -12,104 +12,61 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>
-                            分值
-                        </th>
-                        <th>
-                            原因
-                        </th>
-                        <th>
-                            详细说明
-                        </th>
+                        <th>分值</th>
+                        <th>标签</th>
+                        <th>详细原因</th>
+                        <th>时间</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                    </tr>
-                    <tr class="success">
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                    </tr>
-                    <tr class="error">
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            02/04/2012
-                        </td>
-                    </tr>
-                    <tr class="warning">
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            03/04/2012
-                        </td>
-                    </tr>
-                    <tr class="info">
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            04/04/2012
-                        </td>
-                    </tr>
+                    {% for log in logs %}
+                        {% if log.value < 0 %}
+                            <tr class="danger">
+                                <td>{{ log.value }}</td>
+                                <td>{{ log.summary }}</td>
+                                <td>{{ log.detail }}</td>
+                                <td>{{ log.update_time }}</td>
+                            </tr>
+                        {% else %}
+                            <tr class="success">
+                                <td>{{ log.value }}</td>
+                                <td>{{ log.summary }}</td>
+                                <td>{{ log.detail }}</td>
+                                <td>{{ log.update_time }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
-            <div class="row clearfix">
-                <div class="col-md-4 column">
+            <div class="row">
+                <div class="col-md-4">
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-4">
                     <ul class="pagination">
                         <li>
-                                <a href="#">Prev</a>
+                            <a href="#">Prev</a>
                         </li>
                         <li>
-                                <a href="#">1</a>
+                            <a href="#">1</a>
                         </li>
                         <li>
-                                <a href="#">2</a>
+                            <a href="#">2</a>
                         </li>
                         <li>
-                                <a href="#">3</a>
+                            <a href="#">3</a>
                         </li>
                         <li>
-                                <a href="#">4</a>
+                            <a href="#">4</a>
                         </li>
                         <li>
-                                <a href="#">5</a>
+                            <a href="#">5</a>
                         </li>
                         <li>
-                                <a href="#">Next</a>
+                            <a href="#">Next</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-4">
                 </div>
             </div>
         </div>
@@ -121,6 +78,7 @@
 <script>
     $(function(){
         $("nav li:nth-child(2)").addClass("active");
+        $("td:empty").text("---");
     });
 </script>
 {% endblock %}

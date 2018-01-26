@@ -40,6 +40,20 @@
                 <a class="navbar-brand" href="{{ url_for('admin.index') }}">CAS</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{ url_for('admin.index') }}">分数列表</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.user_list') }}">成员列表</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.user_add') }}">添加成员</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.pwd_edit') }}">修改密码</a>
+                    </li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="{{ url_for('admin.logout') }}">退出</a>
@@ -48,13 +62,15 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <div class="col-sm-2 col-md-1">
-        {%include "admin/grid.html" %}
-        </div>
-        <div class="col-sm-10 col-md-11">
-            {% block content %}
-            {% endblock %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <!-- <div class="col-sm-2 col-md-1"> -->
+            <!-- {%include "admin/grid.html" %} -->
+            <!-- </div> -->
+            <div class="col-sm-12 col-md-12">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
     </div>
     <!-- JavaScript 放置在文档最后面可以使页面加载速度更快 -->

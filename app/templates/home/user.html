@@ -1,72 +1,51 @@
 {% extends "home/base.html" %}
 
-{% block css %}
-<style>
-    #telAlert, #qqAlert, #statusAlert {
-        display: none;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 <div class="container">
     {% include "home/nav.html" %}
     <div class="row">
-        <div class="col-md-12 column">
+        <div class="col-md-12">
             <div class="page-header">
-                <h3>
-                    个人信息页
-                </h3>
+                <h3>个人信息页</h3>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 column">
+        <div class="col-md-12">
             <form role="form">
                 <fieldset>
-                    <input type="hidden" id="userId" value="{{ user.id }}">
+                    {% include "home/alert.html" %}
+                    <input type="hidden" id="userid" value="{{ user.id }}">
                     <div class="form-group">
-                        <label for="input_score"><span class=""></span>分数</label>
-                        <input id="input_score" class="form-control" type="text" readonly unselectable="on" value="{{user.score}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="input_fund"><span class=""></span>额度</label>
-                        <input id="input_fund" class="form-control"  type="text" readonly unselectable="on" value="{{user.fund}}">
+                        <label>分数</label>
+                        <input id="score" class="form-control" type="text" readonly unselectable="on" value="{{user.score}}">
                     </div>
                     <div class="form-group">
-                        <label for="input_name"><span class=""></span>姓名</label>
-                        <input id="input_name" class="form-control"  type="text" readonly unselectable="on" value="{{user.username}}">
+                        <label>额度</label>
+                        <input id="fund" class="form-control"  type="text" readonly unselectable="on" value="{{user.fund}}">
                     </div>
                     <div class="form-group">
-                        <label for="input_education"><span class=""></span>学历</label>
-                        <input id="input_education" class="form-control" type="text" readonly unselectable="on" value="{{user.education}}">
+                        <label>姓名</label>
+                        <input id="username" class="form-control"  type="text" readonly unselectable="on" value="{{user.username}}">
                     </div>
                     <div class="form-group">
-                        <label for="input_grade"><span class=""></span>年级</label>
-                        <input id="input_grade" class="form-control" type="text" readonly unselectable="on" value="{{user.grade}}">
+                        <label>学历</label>
+                        <input id="education" class="form-control" type="text" readonly unselectable="on" value="{{user.education}}">
                     </div>
                     <div class="form-group">
-                        <label for="input_phone"><span class=""></span>手机</label>
-                        <input id="input_phone" class="form-control" type="text" value="{{ user.telephone }}">
-                    </div>
-                    <div id="telAlert" class="alert alert-danger">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>失败！</strong><span></span>
+                        <label>年级</label>
+                        <input id="grade" class="form-control" type="text" readonly unselectable="on" value="{{user.grade}}">
                     </div>
                     <div class="form-group">
-                        <label for="input_qq"><span class=""></span>QQ</label>
-                        <input id="input_qq" class="form-control" name="qq" type="text" value="{{ user.qq }}">
+                        <label>手机</label>
+                        <input id="telephone" class="form-control" type="text" value="{{ user.telephone }}">
                     </div>
-                    <div id="qqAlert" class="alert alert-danger">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>失败！</strong><span></span>
+                    <div class="form-group">
+                        <label>QQ</label>
+                        <input id="qq" class="form-control" name="qq" type="text" value="{{ user.qq }}">
                     </div>
-                    <div id="statusAlert" class="alert alert-success">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong></strong><span></span>
-                    </div>
-                    <a id="save_change" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</a>
-                    <a id="edit_pwd" href="{{ url_for('home.pwd') }}"" class="btn btn-danger"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改密码</a>
+                    <a id="save-edit" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</a>
+                    <a id="edit-password" href="{{ url_for('home.pwd_edit') }}" class="btn btn-danger"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改密码</a>
                 </fieldset>
             </form>
         </div>
@@ -75,108 +54,50 @@
 {% endblock %}
 
 {% block js %}
+<script src=" {{ url_for('static', filename='home/js/my.js') }} "></script>
 <script>
+    
     $(function(){
         $("nav ul:nth-child(1) li:nth-child(1)").addClass("active");
-    });
-
-    $("#input_phone").focus(function(){
-        $("#input_phone").attr({
-            value: ""
+        $("input:empty").attr({
+            "placeholder": "请及时录入"
         });
     });
 
-    $("#input_qq").focus(function(){
-        $("#input_qq").attr({
-            value: ""
-        });
-    });
-
-    // 验证手机字段
-    function validTel() {
-        var tel = $("#input_phone").val();
-        var message = "";
-        var myreg = /^1[34578]\d{9}$/;
-        if(!myreg.test(tel)) {
-            message = "输入的手机号码不合法，手机号码长度为 11 位，第一位必须为 1，第二位可为 3、4、5、7、8";
-        }
-        return {"tel": tel, "message": message};
-    }
-
-    // 验证QQ号字段
-    function validQQ() {
-        var qq = $("#input_qq").val();
-        var message = "";
-        // 首位不能是0，总共是 5-11 位数字
-        var myreg = /^[1-9][0-9]{4,9}$/;
-        if(!myreg.test(qq)) {
-            message = "输入的 QQ 号不合法，QQ 号码长度为 5-11 且首位不能为 0";
-        }
-        return {"qq": qq, "message": message};
-    }
-
-
-    $("#save_change").click(function() {
-        
-        var info = validTel();
-        var tel = info["tel"];
-        message = info["message"];
-        if(message !== ""){
-            $("#telAlert")
-                .find("span")
-                .text(message)
-                .end()
-                .show()
-            $("#input_phone").focus();
+    $("#save-edit").click(function() {
+        hideMyAlert();
+        var user_id = $("#userid").val();
+        var telephone = $("#telephone").val();
+        var qq = $("#qq").val();
+        if(!validTelephone(telephone)) {
+            showMyAlert("手机号码格式不正确，手机号码长度为 11 位，第一位必须为 1，第二位可为 3、4、5、7、8");
             return false;
         }
-        
-        info = validQQ();
-        var qq = info["qq"];
-        message = info["message"];
-        if(message !== ""){
-            $("#qqAlert")
-                .find("span")
-                .text(message)
-                .end()
-                .show()
-            $("#input_qq").focus();
+        if(!validQQ(qq)) {
+            showMyAlert("输入的 QQ 号格式不正确，QQ 号码长度为 5-11 且首位不能为 0");
             return false;
         }
-        var id = $("#userId").val();
         $.ajax({
             async: true,
             type: "POST",
             url: "{{ url_for('home.user') }}",
             dataType: "json",
             data: {
-                "id": id,
-                "tel": tel,
+                "user_id": user_id,
+                "telephone": telephone,
                 "qq": qq
             },
             success: function(data, textStatus) {
-                if(data.status === true){
-                    $("#statusAlert")
-                        .find("strong")
-                        .text("成功！")
-                        .end()
-                        .find("span")
-                        .text("保存成功")
-                        .end()
-                        .show()
-                } else if(data.status === false){
-                    $("#statusAlert")
-                        .find("strong")
-                        .text("失败！")
-                        .end()
-                        .find("span")
-                        .text("保存失败，请重新保存")
-                        .end()
-                        .show()
+                if(data.err_msg !== "") {
+                    showMyAlert(data.err_msg);
+                }
+                else {
+                    showSuccess("保存个人信息成功");
                 }
             }
         });
         return false;
     });
+
 </script>
 {% endblock %}

@@ -6,80 +6,38 @@
 
 {% block content %}
 <div class="container">
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <div id="myAlert" class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>失败！</strong><span></span>
-        </div>
-        <!-- <label for="inputAccount" class="sr-only">用户名</label> -->
-        <input type="account" id="inputAccount" class="form-control" placeholder="用户名" name="account" required autofocus>
-        <!-- <label for="inputPassword" class="sr-only">密码</label> -->
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" name="password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-      </form>
-  </div>
+  <form class="form-signin">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    {% include "home/alert.html" %}
+    <input type="text" id="account" class="form-control" placeholder="用户名" required autofocus>
+    <input type="password" id="password" class="form-control" placeholder="密码" required>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+  </form>
+</div>
 {% endblock %}
 
 {% block js %}
+<script src=" {{ url_for('static', filename='home/js/my.js') }} "></script>
+
 <script>
 
-  // 验证用户名字段
-  function validAccount() {
-    var account = $("#inputAccount").val();
-    var message = "";
-    var myreg = /^[a-zA-Z0-9]{3,20}$/;
-    if(!myreg.test(account)) {
-      message = "输入的用户名不合法，用户名只包含字母和数字，长度在 3-20 之间";
-    }
-    return {"account": account, "message": message};
-  }
-
-  // 验证密码字段
-  function validPassword() {
-    var password = $("#inputPassword").val();
-    var message = "";
-    var myreg = /^[a-zA-Z0-9]{6,20}$/;
-    if(!myreg.test(password)) {
-      message = "输入的密码不合法，密码只包含字母和数字，长度在 6-20 之间";
-    }
-    return {"password": password, "message": message};
-  }
-
   $("button").click(function() {
-    
-    var info = validAccount();
-    var account = info["account"];
-    var message = info["message"];
-    if(message !== ""){
-      $("#myAlert")
-        .find("span")
-        .text(message)
-        .end()
-        .show()
-      $("#inputAccount").focus();
-      // return fasle，会否定 click 的默认动作，也就是不提交
+    hideMyAlert();
+    var account = $("#account").val();
+    var password = $("#password").val();
+    if(!validAccount(account)) {
+      showMyAlert("账号不合法，账号只包含字母和数字，长度在 3-20 之间");
       return false;
     }
-    
-    info = validPassword();
-    var password = info["password"];
-    message = info["message"];
-    if(message !== ""){
-      $("#myAlert")
-        .find("span")
-        .text(message)
-        .end()
-        .show()
-      $("#inputPassword").focus();
+    if(!validAccount(password)) {
+      showMyAlert("密码不合法，密码只包含字母和数字，长度在 6-20 之间");
       return false;
     }
-
     $.ajax({
       type: "POST",
       async: true,
@@ -90,12 +48,8 @@
         "password": password
       },
       success: function(data, textStatus) {
-        if(data.message != ''){
-          $("#myAlert")
-          .find("span")
-          .text(data.message)
-          .end()
-          .show()
+        if(data.err_msg !== "") {
+          showMyAlert(data.err_msg);
         } else {
           window.location.href ="{{ url_for('home.user') }}";
         }

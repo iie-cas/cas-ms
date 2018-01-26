@@ -29,8 +29,8 @@ def create_db():
     """
     创建数据表
     """
-    conn = getConn()
-    with conn as cursor:
-        for item in Models:
-            cursor.execute(item)
-        print("create table finished!")
+    db = getConn()
+    cursor = db.cursor()
+    for item in Models:
+        cursor.execute(item)
+    print('create tables success!')

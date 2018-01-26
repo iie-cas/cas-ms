@@ -1,13 +1,14 @@
 {% extends "admin/base.html" %}
 
 {% block content %}
+<h1 style="text-align:center;padding-bottom:20px;">分数列表</h1>
 <table class="table table-hover table-responsive">
     <tbody>
         <tr>
             <th>姓名</th>
             <th>分数</th>
             <th>额度</th>
-            <th>操作事项</th>
+            <th>修改</th>
         </tr>
         {% for user in users %}
         <tr>
@@ -15,9 +16,9 @@
             <td>{{ user.score }}</td>
             <td>{{ user.fund }}</td>
             <td>
-                <a class="label label-success" href="{{ url_for('admin.score_edit', user_id=user.id) }}">分数</a>
+                <a class="score-edit label label-success" href="{{ url_for('admin.score_edit', user_id=user.id) }}">分数</a>
                 &nbsp;
-                <a class="label label-warning" href="{{ url_for('admin.fund_edit', user_id=user.id) }}">额度</a>
+                <a class="fund-edit label label-warning" href="{{ url_for('admin.fund_edit', user_id=user.id) }}">额度</a>
             </td>
         </tr>
         {% endfor %}
@@ -28,7 +29,7 @@
 {% block js %}
 <script>
     $(function(){
-        $("nav > li:nth-child(2)").addClass("active");
+        $("ul li:nth-child(1)").addClass("active");
     });
 </script>
 {% endblock %}
